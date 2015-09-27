@@ -1,0 +1,28 @@
+@import "../scss/scss-filter";
+
+@include add-filter('unicorns', 'rainbow');
+@function rainbow($value) {
+  @return $unicorns + ' on rainbows';
+}
+
+$unicorns: 'are awesome';
+$unicorns: apply-filter('unicorns', $unicorns);
+
+@debug $unicorns;
+// $unicorns: 'are awesome on rainbows';
+
+body {
+  background: #353535;
+  text-align: center;
+  color: white;
+  font-size: 3em;
+
+  &:before {
+    content: '$unicorns: ' + $unicorns;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    width: 100%;
+    transform: translateY(-50%);
+  }
+}

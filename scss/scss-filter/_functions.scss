@@ -1,0 +1,47 @@
+/// Call functions registerd to the tag
+/// 
+/// @author Lukas Kleinschmidt
+/// 
+/// @require {Map} $scss-filter !global
+/// 
+/// @param  {String} $tag
+/// @param  {Mixed} $value
+/// @param  {ArgList} $var...
+/// 
+/// @return {Mixed}
+@function apply-filter($tag, $value, $var...) {
+
+  @if global-variable-exists('scss-filter') {
+
+    @if map-has-key($scss-filter, $tag) {
+
+      $priorities: map-get($scss-filter, $tag);
+
+      @while length($priorities) > 0 {
+
+        $keys: map-keys($priorities);
+        $key: min($keys...);
+
+        $functions: map-get($priorities, $key);
+        $priorities: map-remove($priorities, $key);
+
+        // Loop through alle functions
+        @each $function in $functions {
+
+          @if function-exists($function) {
+
+            @if length($var) == 0 {
+              $value: call($function, $value);
+            }
+
+            @else {
+              $value: call($function, $value, $var);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @return $value;
+}

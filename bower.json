@@ -1,0 +1,22 @@
+{
+  "name": "scss-filter",
+  "description": "Hook a function to a specific filter action.",
+  "version": "1.0.0",
+  "main": [
+    "./scss/_scss-filter.scss"
+  ],
+  "ignore": [
+    "**/.*",
+    "gulpfile.babel.js",
+    "package.json",
+    "readme.md",
+    "test"
+  ],
+  "dependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eater-lullu/scss-filter.git"
+  },
+  "license": "MIT"
+}

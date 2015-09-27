@@ -1,0 +1,55 @@
+/// Mixin to add a scss-filter
+/// 
+/// @author Lukas Kleinschmidt
+/// 
+/// @require {Map} $scss-filter !global
+/// 
+/// @param  {String} $tag
+/// @param  {String} $function
+@mixin add-filter($tag, $function, $priority: 10) {
+
+  @if not(global-variable-exists('scss-filter')) {
+
+    /// Global variable to keep track
+    /// of all filters
+    /// 
+    /// @type {Map}
+    /// 
+    /// @example $scss-filter: (
+    ///   $tag: (
+    ///     $priority: (
+    ///       $function...
+    ///     )
+    ///   )
+    /// )
+    $scss-filter: () !global;
+  }
+
+  // tag is already registered
+  @if map-has-key($scss-filter, $tag) {
+
+    $priorities: map-get($scss-filter, $tag);
+    
+    // priority is already registered
+    @if map-has-key($priorities, $priority) {
+
+      // merge $function with already registered functions
+      $functions: map-get($priorities, $priority);
+      $functions: append($functions, $function);
+      $function: $functions;
+    }
+
+    // merge $priority with already registered priorities
+    $priorities: map-merge($priorities, ($priority: $function));
+    $priority: $priorities;
+  }
+
+  @else {
+
+    // map $function to $priority
+    $priority: ($priority: $function);
+  }
+
+  // merge new $scss-filter with $scss-filter
+  $scss-filter: map-merge($scss-filter, ($tag: $priority)) !global;
+}
