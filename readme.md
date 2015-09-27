@@ -30,7 +30,7 @@ Use the apply-filter function to register a new filter.
 	/// @return {Mixed}
 	@function apply-filter($tag, $value, $var...) {
 
-	  @if global-variable-exists('filter') {
+	  @if global-variable-exists('scss-filter') {
 
 	    @if map-has-key($scss-filter, $tag) {
 
